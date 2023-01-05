@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cron = require('node-cron');
 
 const { PORT } = require('./config/server-config'); 
 const { sendEmail } = require('./services/email-service')
@@ -11,13 +12,17 @@ const setupAndStartServer = () => {
     app.use(bodyParser.urlencoded({extended: true}));
 
     app.listen(PORT, () => {
-        sendEmail(
-            'support@admin.com',
-            'zarvisalpha258@gmail.com',
-            'This is a testing email',
-            'hello world!'
-        );
-        console.log(`Server started at port: ${PORT}`);
+        // sendEmail(
+        //     'support@admin.com',
+        //     'zarvisalpha258@gmail.com',
+        //     'This is a testing email',
+        //     'hello world!'
+        // );
+        cron.schedule('*/1 * * * *', () => {
+            console.log(`Server started at port: ${PORT}`);
+        })
+
+        
     })
 
 }
