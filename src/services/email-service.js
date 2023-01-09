@@ -31,8 +31,18 @@ const creareNotification = async(data) => {
     }
 }
 
+const updateTicket = async(ticketId) => {
+    try {
+        const response = await repo.update(ticketId, {status: "SUCCESS"});
+        return response;
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     sendEmail,
     creareNotification,
-    fetchPendingEmails
+    fetchPendingEmails,
+    updateTicket
 }
