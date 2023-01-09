@@ -4,7 +4,12 @@ const EmailService = require('../services/email-service')
 const setupJobs = () => {
     cron.schedule('*/1 * * * *', async() => {
         const response = await EmailService.fetchPendingEmails();
-        console.log(response);
+        response.forEach(email => {
+            EmailService.sendEmail("ReminderService@gmail.com",
+            email.recepientEmail,
+            email.subject,
+            email.content);
+        });
     })
 }
 
