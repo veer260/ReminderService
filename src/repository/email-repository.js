@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { NotificationTicket } = require('../models/index')
 
 class TicketRepository {
@@ -21,6 +22,22 @@ class TicketRepository {
             return ticket;
         } catch (error) {
             throw error;
+        }
+    }
+
+    async get(fliter) {
+        try {
+            const tickets = await NotificationTicket.findAll({
+                where: {
+                    status: fliter.status,
+                    notificationTime: {
+                        [Op.lte]: new Date()
+                    }
+                }
+            });
+            return tickets;
+        } catch (error) {
+            
         }
     }
 }
